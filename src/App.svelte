@@ -19,6 +19,8 @@
   function handleMessage(event) {
 		alert(event.detail.text);
 	}
+
+  let name3 = 'world';
 </script>
 
 <h1>Hello {name.toUpperCase()}!</h1>
@@ -52,6 +54,10 @@
 </div>
 
 <Inner on:message={handleMessage} />
+<p></p>
+<input bind:value={name3} />
+
+<h1>Hello {name3}!</h1>
 
 <style>
   p {
