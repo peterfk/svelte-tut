@@ -1,5 +1,7 @@
 <script>
   import Nested from "./components/Nested.svelte";
+  import ColoredButtons from "./components/ColoredButtons.svelte";
+  import Inner from "./components/Inner.svelte";
 
   let name = "Svelte";
   let src = "./assets/svelte.svg";
@@ -12,10 +14,12 @@
     count += 1;
   }
 
-  const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
-	let selected = colors[0];
-</script>
+  let m = { x: 0, y: 0 };
 
+  function handleMessage(event) {
+		alert(event.detail.text);
+	}
+</script>
 
 <h1>Hello {name.toUpperCase()}!</h1>
 <img {src} alt="{name2} dances." />
@@ -35,18 +39,19 @@
   <p>{count} is between 0 and 10</p>
 {/if}
 
-<h1 style="color: {selected}">Pick a colour</h1>
-<div>
-	{#each colors as color, i}
-		<button
-			aria-current={selected === color}
-			aria-label={color}
-			style="background: {color}"
-			on:click={() => selected = color}
-		>{i + 1}</button>
-	{/each}
+<ColoredButtons />
+
+<button on:click|once={() => alert("clicked")}> Click me </button>
+
+<div
+  on:pointermove={(e) => {
+    m = { x: e.clientX, y: e.clientY };
+  }}
+>
+  The pointer is at {m.x} x {m.y}
 </div>
 
+<Inner on:message={handleMessage} />
 
 <style>
   p {
@@ -54,30 +59,4 @@
     font-family: "Comic Sans MS", cursive;
     font-size: 2em;
   }
-  
-  h1 {
-		transition: color 0.2s;
-	}
-
-	div {
-		display: grid;
-		grid-template-columns: repeat(7, 1fr);
-		grid-gap: 5px;
-		max-width: 400px;
-	}
-
-	button {
-		aspect-ratio: 1;
-		border-radius: 50%;
-		background: var(--color, #fff);
-		transform: translate(-2px,-2px);
-		filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
-		transition: all 0.1s;
-	}
-
-	button[aria-current="true"] {
-		transform: none;
-		filter: none;
-		box-shadow: inset 3px 3px 4px rgba(0,0,0,0.2);
-	}
 </style>
