@@ -23,6 +23,7 @@
   let name3 = 'world';
 </script>
 
+<!-- Start of HTML Block -->
 <h1>Hello {name.toUpperCase()}!</h1>
 <img {src} alt="{name2} dances." />
 <p>This is a paragraph.</p>
